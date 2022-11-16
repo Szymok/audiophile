@@ -20,10 +20,49 @@ with DAG(
 		task_id='scrape_audiophile_data',
 		bash_command='python /opt/airflow/tasks/scraper_extract/scraper.py',
 	)
+
+	upload_bronze_csv_s3 = BashOperator(
+		task_id='upload_bronze_csv_s3',
+		bash_command='python /opt/airflow/tasks/upload_csv_s3.py bronze'
+	)
+
+	validate_sanitize_bronze_data = BashOperator(
+		task_id='validate_sanitize_bronze_data',
+		bash_command='python /opt/airflow/tasks/validate_sanitize_bronze_data.py'
+	)
+
+	upload_silver_csv_s3 = BashOperator(
+		task_id='upload_silver_csv_s3',
+		bash_command='python /opt/airflow/tasks/upload_csv_s3.py silver'
+	)
+
+	redshift_load = BashOperator(
+		task_id='redshift_load',
+		bash_command='python /opt/airflow/tasks/redshift_load/load_redshift.py'
+	)
+
+	rds_load = BashOperator(
+		task_id='rds_load',
+		bash_command='python /opt/airflow/tasks/rds_load/load_rds.py'
+	)
+
+	generate_dbt_profile = BashOperator(
+		task_id='generate_dbt_profile',
+		bash_command='python /opt/airflow/tasks/dbt_transform/generate_dbt_profile.py'
+	)
 	
+	dbt_transform = DbtRunOperator(
+		task_id='run_dbt_transformations',
+		dir='/opt/airflow/tasks/dbt_transform/',
+		profiles_dir='/opt/airflow/tasks/dbt_transform'
+	)
 
-
-
+	dbt_test = DbtTestOperator(
+		task_id='run_dbt_tests',
+		dir='/opt/airflow/tasks/dbt_transform/',
+		profiles_dir='/opt/airflow/tasks/dbt_transform'
+	)
+	
 (
 	scrape_audiophile_data
 	>> upload_bronze_csv_s3
