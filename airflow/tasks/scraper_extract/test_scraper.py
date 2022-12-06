@@ -32,3 +32,39 @@ class TestScraper(unittest.TestCase):
 		Test if Headphone url connection is successful
 		'''
 		self.assertEqual(self.headphone_response.status_code, 200)
+
+	def test_iem_soup(self):
+		'''
+		Test if IEM soup parsed successfully
+		'''
+		self.assertNotEqual(self.iem_soup, None)
+
+	def test_headphones_soup(self):
+		'''
+		Test if Headphone soup parsed succesfully
+		'''
+		self.assertNotEqual(self.headphone_soup)
+
+	def test_iem_table(self):
+		'''
+		Test if the database table in the IEM url exists
+		'''
+		self.assertGreaterEqual(len(self.iem_soup.find_all('table')), 0)
+
+	def test_headphone_table(self):
+		'''
+		Test if the database table in the Headphone url exists
+		'''
+		self.assertGreaterEqual(len(self.headphone_soup.find_all('table')), 0)
+
+	def test_iem_table_not_empty(self):
+		'''
+		Test of the database table in the IEM url is not empty
+		'''
+		self.assertGreaterEqual(len(self.iem_soup.find_all('tr')), 0)
+
+	def test_headphone_table_not_empty(self):
+		'''
+		Test of the database table in the Headphone url is not empty
+		'''
+		self.assertGreaterEqual(len(self.headphone_soup.find_all('tr')), 0)
