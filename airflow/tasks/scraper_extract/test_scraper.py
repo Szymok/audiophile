@@ -68,3 +68,27 @@ class TestScraper(unittest.TestCase):
 		Test of the database table in the Headphone url is not empty
 		'''
 		self.assertGreaterEqual(len(self.headphone_soup.find_all('tr')), 0)
+
+	def test_iem_table_header(self):
+		'''
+		Test if the header in the IEM database table exists
+		'''
+		self.assertNotEqual(self.iem_soup.find_all('thead'), None)
+
+	def test_headphone_table_header(self):
+		'''
+		Test if the header in the headphone database table exists
+		'''
+		self.assertNotEqual(self.headphone_soup.find_all('thead'), None)
+
+	def test_iem_table_body(self):
+		'''
+		Test if the body in the IEM database table exists
+		'''
+		self.assertNotEqual(self.iem_soup.find_all('tbody'), None)
+
+	def test_headphone_table_body(self):
+		'''
+		Test if the body in the Headphone database table exists
+		'''
+		self.assertNotEqual(self.headphone_soup.find_all('tbody'), None)
