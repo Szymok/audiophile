@@ -20,3 +20,4 @@ The pipeline is built using the following technologies:
 7. Transform and test the data through dbt in the warehouse.
 
 The pipeline is designed to be flexible, allowing for the easy addition or removal of tasks as needed. The use of containerization and orchestration through Airflow also allows for easy scaling and management of the pipeline.
+ 
